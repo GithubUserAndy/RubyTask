@@ -22,9 +22,9 @@ describe CsvHandler do
 =end
   describe '#format' do
     it 'formats the csv correctly' do
-      expect(subject.format).to eq(
-        [["Derek Trotter","SA1 1NW", "no"],
-        ["Rick Grimes","SA2 6TR","no"]])    
+      expect(subject.format).to eq([
+        {"name"=>"Derek Trotter", "opt out"=>"no", "postcode"=>"sa1 1nw", "potcode"=>"SA1 1NW"},
+        {"name"=>"Rick Grimes", "opt out"=>"no", "postcode"=>"Sa2 6tr", "potcode"=>"SA2 6TR"}])    
     end
   end
 

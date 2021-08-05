@@ -6,7 +6,7 @@ class CsvHandler
   @loaded = false
 	def initialize(file_name)
 		begin # try to read file
-      @csv_data = CSV.parse(File.read(file_name))
+      @csv_data = CSV.read(file_name)
   	rescue Errno::ENOENT # closes program gracefully if error
     	print "File not found"
       exit 1
@@ -21,23 +21,30 @@ class CsvHandler
   def format
   # 1) format the csv file in to 2d array (no titles)
     output = []
-    @csv_data.map { |row| output.push(row)}
+    @csv_data.each do |i|
+      row = Hash.new
+      puts i[0]
+      row["name"] = i[0]
+      row["postcode"] = i[1]
+      row["opt out"] = i[2]
+      output.push(row)
+    end
     output.shift
   
   # 2) remove rows with opt out set to yes
     output.each do |i|
-    if i[2] == 'yes'
+    if i["opt out"] == 'yes'
       output.delete(i)
     end
 
   # 3) capitalise the names  
     output.each do |i|
-      i[0] = i[0].split.map{ |part| part.capitalize}.join(' ')
+      i["name"] = i["name"].split.map{ |part| part.capitalize}.join(' ')
     end
 
   # 4) set postcodes to uppercase
     output.each do |i|
-      i[1] = i[1].upcase
+      i["potcode"] = i["postcode"].upcase
     end
 
 
