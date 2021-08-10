@@ -12,7 +12,8 @@ class CsvHandler
     @loaded = true
 	end
 
-  def format
+
+  def hash_format
     @csv_data.each do |i|
       if i[2] == 'yes'
         @csv_data.delete(i)
@@ -25,6 +26,21 @@ class CsvHandler
         :postcode => i[1].upcase,
         :opt_out => i[2]
       }
+    }[1..-1]
+  end
+  
+  def arr_format
+    @csv_data.each do |i|
+      if i[2] == 'yes'
+        @csv_data.delete(i)
+      end
+    end
+    @csv_data.map { |i|
+      [
+        i[0].split.map{ |part| part.capitalize}.join(' '),
+        i[1].upcase,
+        i[2]
+      ]
     }[1..-1]
   end
 end
