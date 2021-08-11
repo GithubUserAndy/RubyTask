@@ -11,28 +11,32 @@ class CsvHandler
 	end
 
   def csv_data
-    @csv_data.select { |i| i[2] != 'yes'}[1..-1]
+    @csv_data[1..-1]
   end
 
   def hash_format
-    csv_data.map { |i|
+    csv_data.map do |i|
+      next if i[2] == 'yes'
+
       row = Hash.new
       {
         :name => capitalize_each_word(i[0]),
         :postcode => i[1].upcase,
         :opt_out => i[2]
       }
-    }
+    end.compact
   end
   
   def arr_format
-    csv_data.map { |i|
+    csv_data.map do |i|
+      next if i[2] == 'yes'
+
       [
         capitalize_each_word(i[0]),
         i[1].upcase,
         i[2]
       ]
-    }
+    end.compact
   end
 
   private
