@@ -18,7 +18,7 @@ class CsvHandler
     csv_data.map { |i|
       row = Hash.new
       {
-        :name => i[0].split.map{ |part| part.capitalize}.join(' '),
+        :name => capitalize_each_word(i[0]),
         :postcode => i[1].upcase,
         :opt_out => i[2]
       }
@@ -28,10 +28,16 @@ class CsvHandler
   def arr_format
     csv_data.map { |i|
       [
-        i[0].split.map{ |part| part.capitalize}.join(' '),
+        capitalize_each_word(i[0]),
         i[1].upcase,
         i[2]
       ]
     }
+  end
+
+  private
+
+  def capitalize_each_word(string)
+    string.split.map{ |part| part.capitalize}.join(' ')
   end
 end
