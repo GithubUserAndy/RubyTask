@@ -15,26 +15,25 @@ class CsvHandler
   end
 
   def hash_format
-    csv_data.map do |i|
-      next if i[2] == 'yes'
+    csv_data.map do |row|
+      next if row[2] == 'yes'
 
-      row = Hash.new
       {
-        :name => capitalize_each_word(i[0]),
-        :postcode => i[1].upcase,
-        :opt_out => i[2]
+        name: capitalize_each_word(row[0]),
+        postcode: row[1].upcase,
+        opt_out: row[2]
       }
     end.compact
   end
-  
+
   def arr_format
-    csv_data.map do |i|
-      next if i[2] == 'yes'
+    csv_data.map do |row|
+      next if row[2] == 'yes'
 
       [
-        capitalize_each_word(i[0]),
-        i[1].upcase,
-        i[2]
+        capitalize_each_word(row[0]),
+        row[1].upcase,
+        row[2]
       ]
     end.compact
   end
